@@ -6,7 +6,7 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/09 14:12:59 by jleu              #+#    #+#             */
-/*   Updated: 2015/12/13 16:29:26 by jleu             ###   ########.fr       */
+/*   Updated: 2015/12/13 00:16:58 by jleu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ static int	ft_cansetpiece(char *p, size_t pp, char *s, size_t ps, size_t ss)
 			size += ft_cansetpiece(p, pp + 5, s, ps + ss + 1, ss);
 		if (pp > 0 && p[pp - 1] == '#' && ps > 0 && s[ps - 1] == '.')
 			size += ft_cansetpiece(p, pp - 1, s, ps - 1, ss);
+		p[pp] = '#';
 		return (size);
 	}
 	return (0);
 }
 
-static void	ft_set_p(char *p,size_t pp, char *s, size_t ps, size_t ss)
+static void	ft_set_p(char *p, size_t pp, char *s, size_t ps, size_t ss)
 {
 	if (p[pp] == '#' && s[ps] == '.')
 	{
@@ -43,6 +44,7 @@ static void	ft_set_p(char *p,size_t pp, char *s, size_t ps, size_t ss)
 			ft_set_p(p, pp + 5, s, ps + ss + 1, ss);
 		if (pp > 0 && p[pp - 1] == '#')
 			ft_set_p(p, pp - 1, s, ps - 1, ss);
+		p[pp] = '#';
 	}
 }
 
@@ -60,32 +62,26 @@ int	ft_setpiece(char *piece, char *sqr, size_t num, size_t ss)
 {
 	size_t cptp;
 	size_t cpts;
-	char *cpyp;
 
 	if (!piece || !sqr || num > 26)
 		return 0;
 	cptp = (num - 1) * 21;
 	cpts = 0;
-	cpyp = ft_strdup(piece);
-	while (cpyp[cptp] != '#')
+	while (piece[cptp] != '#')
 		cptp++;
 	while (sqr[cpts] && sqr[cpts] != '.')
 		cpts++;
 	while (sqr[cpts + 4])
 	{
-		if (ft_cansetpiece(cpyp, cptp, sqr, cpts, ss) == 4)
+		if (ft_cansetpiece(piece, cptp, sqr, cpts, ss) == 4)
 		{
-			cpyp = ft_strcpy(cpyp, piece);
-			ft_set_p(cpyp, cptp, sqr, cpts, ss);
+			ft_set_p(piece, cptp, sqr, cpts, ss);
 			ft_setletter(sqr, num);
-			free(cpyp);
 			return(1);
 		}
-		cpyp = ft_strcpy(cpyp, piece);
 		cpts++;
 		while (sqr[cpts] && sqr[cpts] != '.')
 			cpts++;
 	}
-	free(cpyp);
 	return (0);
 }

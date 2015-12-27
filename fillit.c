@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 		size_file = ft_fichier_valid(argv[1]);
 		if (size_file == 0)
 		{
-			ft_putstr("error");
+			ft_putendl("error");
 			return (0);
 		}
 		sqr_size = get_sqrsize(size_file);
@@ -36,9 +36,14 @@ int	main(int argc, char **argv)
 			free(sqr);
 			sqr = gen_square(sqr_size);
 		}
-		ft_putstr(sqr);
+		if (pieces[0] != '0')
+			ft_putstr(sqr);
+		else
+			ft_putendl("error");
+		free(sqr);
 		free(pieces);
-		free (sqr);
+		return (0);
 	}
+	ft_putendl("error");
 	return (0);
 }
