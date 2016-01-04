@@ -21,11 +21,13 @@ static int ft_rectetriisequ(char *p, int pos1, int pos2)
 	{
 		p[pos1] = '.';
 		p[pos2] = '.';
-		if(p[pos1 + 1] == '#' && p[pos2 + 1] == '#')
+		if (p[pos1 + 1] == '#' && p[pos2 + 1] == '#')
 			size += ft_rectetriisequ(p, pos1 + 1, pos2 + 1);
-		if ((pos1 + 1) % 21 < 15 && (pos2 + 1) % 21 < 15 && p[pos1 + 5] == '#' && p[pos2 + 5] == '#')
+		if ((pos1 + 1) % 21 < 15 && (pos2 + 1) % 21 < 15
+		&& p[pos1 + 5] == '#' && p[pos2 + 5] == '#')
 			size += ft_rectetriisequ(p, pos1 + 5, pos2 + 5);
-		if (pos1 > 0 && pos2 > 0 && p[pos1 - 1] == '#' && p[pos2 - 1] == '#')
+		if (pos1 > 0 && pos2 > 0 && p[pos1 - 1] == '#'
+		 && p[pos2 - 1] == '#')
 			size += ft_rectetriisequ(p, pos1 - 1, pos2 - 1);
 		p[pos1] = '#';
 		p[pos2] = '#';
@@ -46,6 +48,5 @@ int	ft_comptetri(char *p, int elem1, int elem2)
 		cpt1++;
 	while (p[cpt2] != '#')
 		cpt2++;
-	equal = ft_rectetriisequ(p, cpt1, cpt2);
-	return (equal == 4);
+	return (ft_rectetriisequ(p, cpt1, cpt2) == 4);
 }
