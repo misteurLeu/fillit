@@ -6,7 +6,7 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 15:26:11 by jleu              #+#    #+#             */
-/*   Updated: 2015/12/12 22:25:42 by jleu             ###   ########.fr       */
+/*   Updated: 2016/01/04 16:04:49 by jleu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*ft_getpieces(size_t size_file, char *filename);
 int		ft_backtrack(char *sqr, char *p, size_t sqr_s, size_t nb_p);
 int		ft_chrintri(int *tab, int i, size_t endtab);
 void	ft_swap_int(int **dst, int **src, int pos_dst, int pos_src);
-int	ft_comptetri(char *p, int elem1, int elem2);
+int		ft_comptetri(char *p, int elem1, int elem2);
+void	ft_resetPiece(char *p);
 
 #endif

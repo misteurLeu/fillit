@@ -6,7 +6,7 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/13 16:10:15 by jleu              #+#    #+#             */
-/*   Updated: 2015/12/13 16:42:20 by jleu             ###   ########.fr       */
+/*   Updated: 2016/01/04 16:04:08 by jleu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int ft_rectetriisequ(char *p, int pos1, int pos2)
 	size = 1;
 	if(p[pos1] == '#' && p[pos2] == '#')
 	{
-		p[pos1] = '.';
-		p[pos2] = '.';
+		p[pos1] = 'A';
+		p[pos2] = 'A';
 		if (p[pos1 + 1] == '#' && p[pos2 + 1] == '#')
 			size += ft_rectetriisequ(p, pos1 + 1, pos2 + 1);
 		if ((pos1 + 1) % 21 < 15 && (pos2 + 1) % 21 < 15
@@ -29,8 +29,6 @@ static int ft_rectetriisequ(char *p, int pos1, int pos2)
 		if (pos1 > 0 && pos2 > 0 && p[pos1 - 1] == '#'
 		 && p[pos2 - 1] == '#')
 			size += ft_rectetriisequ(p, pos1 - 1, pos2 - 1);
-		p[pos1] = '#';
-		p[pos2] = '#';
 		return size;
 	}
 	return (0);
@@ -48,5 +46,7 @@ int	ft_comptetri(char *p, int elem1, int elem2)
 		cpt1++;
 	while (p[cpt2] != '#')
 		cpt2++;
-	return (ft_rectetriisequ(p, cpt1, cpt2) == 4);
+	equal = (ft_rectetriisequ(p, cpt1, cpt2) == 4);
+	ft_resetPiece(p);
+	return (equal);
 }
