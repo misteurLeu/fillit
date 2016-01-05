@@ -6,15 +6,15 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/09 20:11:22 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/04 17:10:18 by jleu             ###   ########.fr       */
+/*   Updated: 2016/01/05 16:04:54 by mfleuria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int	endbt(char *values, size_t nb_p)
+static int			endbt(char *values, size_t nb_p)
 {
-	int isnull;
+	int				isnull;
 
 	isnull = 1;
 	while (nb_p > 0 && isnull)
@@ -25,53 +25,57 @@ static int	endbt(char *values, size_t nb_p)
 	return (isnull);
 }
 
-static int	ft_rec_backtrack(char *values, char *p, char *sqr, size_t nb_p, size_t sqr_s)
+/*
+**		nb_p 	= s[0]
+**		sqr_s	= s[1]
+*/
+
+/*
+**		sqr		= q[0]
+**		p		= q[1]
+*/
+
+static int			ft_rec_backtrack(char *values, char *q[2], size_t s[2])
 {
-	size_t cpt;
-	static size_t end = 0;
-	size_t lasttetri;
+	size_t			cpt;
+	static size_t	end = 0;
+	size_t			lasttetri;
 
 	cpt = 0;
-	while (cpt < nb_p && end < 1500000000)
+	while (cpt < s[0] && end < NB_TEST_MAX)
 	{
-		while (cpt < nb_p && values[cpt] < 0)
+		while (cpt < s[0] && values[cpt] < 0)
 			cpt++;
-		if (cpt < nb_p && ft_setpiece(p, sqr, cpt + 1, sqr_s))
+		if (cpt < s[0] && ft_setpiece(q, cpt + 1, s[1]))
 		{
 			values[cpt] = -values[cpt];
-			if (ft_rec_backtrack(values, p, sqr, nb_p, sqr_s) == 0)
-			{
-				ft_removepiece(sqr, cpt + 1);
+			if (ft_rec_backtrack(values, q, s) == 0 &&
+					ft_removepiece(q[0], cpt + 1))
 				values[cpt] = -values[cpt];
-			}
-			else if (end < 1500000000)
-				return (1);
 			else
-				return (-1);
+				return (end < NB_TEST_MAX ? 1 : -1);
 		}
-		lasttetri = cpt;
-		cpt++;
-		while (cpt < nb_p && (values[cpt] < 0 || values[cpt] == values[lasttetri]))
+		lasttetri = cpt++;
+		while (cpt < s[0] && (values[cpt] < 0 ||
+				values[cpt] == values[lasttetri]))
 			cpt++;
 		end++;
 	}
-	if (end >= 1500000000)
-		return (-1);
-	return (endbt(values, nb_p));
+	return (end >= NB_TEST_MAX ? -1 : endbt(values, s[0]));
 }
 
-static char	*type_pieces(char *p,size_t nb_p)
+static char			*type_pieces(char *p, size_t nb_p)
 {
-	char *types;
-	int cpt;
-	int cpt2;
-	int cpt3;
+	char			*types;
+	int				cpt;
+	int				cpt2;
+	int				cpt3;
 
 	if (!(types = (char*)malloc(sizeof(char) * nb_p)))
 		return (0);
 	cpt2 = 0;
 	cpt3 = 0;
-	while(cpt2 < nb_p)
+	while ((size_t)cpt2 < nb_p)
 	{
 		cpt = 0;
 		while (cpt < cpt2 && !ft_comptetri(p, cpt + 1, cpt2 + 1))
@@ -88,18 +92,28 @@ static char	*type_pieces(char *p,size_t nb_p)
 	return (types);
 }
 
-int		ft_backtrack(char *sqr, char *p, size_t sqr_s, size_t nb_p)
-{
-	char *tab1;
-	int success;
+/*
+**		nb_p 	= size[0]
+**		sqr_s	= size[1]
+*/
 
-	if (!(tab1 = type_pieces(p, nb_p)))
+/*
+**		sqr		= q[0]
+**		p		= q[1]
+*/
+
+int					ft_backtrack(char *q[2], size_t size[2])
+{
+	char			*tab1;
+	int				success;
+
+	if (!(tab1 = type_pieces(q[1], size[0])))
 		return (0);
-	success = ft_rec_backtrack(tab1, p, sqr, nb_p, sqr_s);
+	success = ft_rec_backtrack(tab1, q, size);
 	free(tab1);
 	if (success == -1)
 	{
-		p[0] = '0';
+		q[1][0] = '0';
 		return (1);
 	}
 	return (success);

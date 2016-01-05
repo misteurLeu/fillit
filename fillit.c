@@ -6,36 +6,45 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 17:04:57 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/05 00:40:44 by mfleuria         ###   ########.fr       */
+/*   Updated: 2016/01/05 15:35:43 by mfleuria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+/*
+**		size_file	= size[0]
+**		sqr_size	= size[1]
+*/
+
+/*
+**		sqr			= q[0]
+**		pieces		= q[1]
+*/
+
 int			main(int argc, char **argv)
 {
-	size_t	size_file;
-	size_t	sqr_size;
-	char	*sqr;
-	char	*pieces;
+	size_t	size[2];
+	char	*q[2];
 
-	if (((size_file = ft_fichier_valid(argv[1])) == 0 || argc != 2)
+	if (((size[0] = ft_fichier_valid(argv[1])) == 0 || argc != 2)
 			&& write(1, "error\n", 7))
 		return (0);
-	sqr_size = get_sqrsize(size_file);
-	sqr = gen_square(sqr_size);
-	pieces = ft_getpieces(size_file, argv[1]);
-	while (!ft_backtrack(sqr, pieces, sqr_size, (size_file + 1) / 21))
+	size[1] = get_sqrsize(size[0]);
+	q[0] = gen_square(size[1]);
+	q[1] = ft_getpieces(size[0], argv[1]);
+	size[0] = (size[0] + 1) / 21;
+	while (!ft_backtrack(q, size))
 	{
-		sqr_size++;
-		free(sqr);
-		sqr = gen_square(sqr_size);
+		size[1]++;
+		free(q[0]);
+		q[0] = gen_square(size[1]);
 	}
-	if (pieces[0] != '0')
-		ft_putstr(sqr);
+	if (q[1][0] != '0')
+		ft_putstr(q[0]);
 	else
 		ft_putendl("error");
-	free(sqr);
-	free(pieces);
+	free(q[0]);
+	free(q[1]);
 	return (0);
 }

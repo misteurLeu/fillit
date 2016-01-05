@@ -6,48 +6,59 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/09 14:12:59 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/05 12:10:59 by mfleuria         ###   ########.fr       */
+/*   Updated: 2016/01/05 15:56:41 by mfleuria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int	ft_cansetpiece(char *p, size_t pp, char *s, size_t ps, size_t ss)
+/*
+**	s		= q[0]
+**	p		= q[1]
+*/
+
+static int		ft_cansetpiece(char *q[2], size_t pp, size_t ps, size_t ss)
 {
-	int size;
+	int			size;
 
 	size = 1;
-	if (p[pp] == '#' && s[ps] == '.')
+	if (q[1][pp] == '#' && q[0][ps] == '.')
 	{
-		p[pp] = 'A';
-		if (p[pp + 1] == '#' && s[ps + 1] == '.')
-			size += ft_cansetpiece(p, pp + 1, s, ps + 1, ss);
-		if ((pp + 1) % 21 < 15 && ps < ss * ss && p[pp + 5] == '#' && s[ps] == '.')
-			size += ft_cansetpiece(p, pp + 5, s, ps + ss + 1, ss);
-		if (pp > 0 && p[pp - 1] == '#' && ps > 0 && s[ps - 1] == '.')
-			size += ft_cansetpiece(p, pp - 1, s, ps - 1, ss);
+		q[1][pp] = 'A';
+		if (q[1][pp + 1] == '#' && q[0][ps + 1] == '.')
+			size += ft_cansetpiece(q, pp + 1, ps + 1, ss);
+		if ((pp + 1) % 21 < 15 && ps < ss * ss && q[1][pp + 5] == '#'
+				&& q[0][ps] == '.')
+			size += ft_cansetpiece(q, pp + 5, ps + ss + 1, ss);
+		if (pp > 0 && q[1][pp - 1] == '#' && ps > 0 && q[0][ps - 1] == '.')
+			size += ft_cansetpiece(q, pp - 1, ps - 1, ss);
 		return (size);
 	}
 	return (0);
 }
 
-static void	ft_set_p(char *p, size_t pp, char *s, size_t ps, size_t ss)
+/*
+**	s	= q[0]
+**	p	= q[1]
+*/
+
+static void		ft_set_p(char *q[2], size_t pp, size_t ps, size_t ss)
 {
-	if (p[pp] == '#' && s[ps] == '.')
+	if (q[1][pp] == '#' && q[0][ps] == '.')
 	{
-		p[pp] = '.';
-		s[ps] = '#';
-		if (p[pp + 1] == '#')
-			ft_set_p(p, pp + 1, s, ps + 1, ss);
-		if ((pp + 1) % 21 < 15 && p[pp + 5] == '#')
-			ft_set_p(p, pp + 5, s, ps + ss + 1, ss);
-		if (pp > 0 && p[pp - 1] == '#')
-			ft_set_p(p, pp - 1, s, ps - 1, ss);
-		p[pp] = '#';
+		q[1][pp] = '.';
+		q[0][ps] = '#';
+		if (q[1][pp + 1] == '#')
+			ft_set_p(q, pp + 1, ps + 1, ss);
+		if ((pp + 1) % 21 < 15 && q[1][pp + 5] == '#')
+			ft_set_p(q, pp + 5, ps + ss + 1, ss);
+		if (pp > 0 && q[1][pp - 1] == '#')
+			ft_set_p(q, pp - 1, ps - 1, ss);
+		q[1][pp] = '#';
 	}
 }
 
-static void ft_setletter(char *s, size_t l)
+static void		ft_setletter(char *s, size_t l)
 {
 	while (*s)
 	{
@@ -57,32 +68,41 @@ static void ft_setletter(char *s, size_t l)
 	}
 }
 
-int	ft_setpiece(char *piece, char *sqr, size_t num, size_t ss)
-{
-	size_t cptp;
-	size_t cpts;
+/*
+**	cptp = cpt[0]
+**	cpts = cpt[1]
+*/
 
-	if (!piece || !sqr || num > 26)
-		return 0;
-	cptp = (num - 1) * 21;
-	cpts = 0;
-	while (piece[cptp] != '#')
-		cptp++;
-	while (sqr[cpts] && sqr[cpts] != '.')
-		cpts++;
-	while (sqr[cpts + 4])
+/*
+**	sqr		= q[0]
+**	piece	= q[1]
+*/
+
+int				ft_setpiece(char *q[2], size_t num, size_t ss)
+{
+	size_t		cpt[2];
+
+	if (!q[1] || !q[0] || num > 26)
+		return (0);
+	cpt[0] = (num - 1) * 21;
+	cpt[1] = 0;
+	while (q[1][cpt[0]] != '#')
+		cpt[0]++;
+	while (q[0][cpt[1]] && q[0][cpt[1]] != '.')
+		cpt[1]++;
+	while (q[0][cpt[1] + 4])
 	{
-		if (ft_cansetpiece(piece, cptp, sqr, cpts, ss) == 4)
+		if (ft_cansetpiece(q, cpt[0], cpt[1], ss) == 4)
 		{
-			ft_resetpiece(piece);
-			ft_set_p(piece, cptp, sqr, cpts, ss);
-			ft_setletter(sqr, num);
-			return(1);
+			ft_resetpiece(q[1]);
+			ft_set_p(q, cpt[0], cpt[1], ss);
+			ft_setletter(q[0], num);
+			return (1);
 		}
-		ft_resetpiece(piece);
-		cpts++;
-		while (sqr[cpts] && sqr[cpts] != '.')
-			cpts++;
+		ft_resetpiece(q[1]);
+		cpt[1]++;
+		while (q[0][cpt[1]] && q[0][cpt[1]] != '.')
+			cpt[1]++;
 	}
 	return (0);
 }
