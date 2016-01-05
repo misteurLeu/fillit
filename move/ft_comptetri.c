@@ -6,7 +6,7 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/13 16:10:15 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/05 12:16:05 by mfleuria         ###   ########.fr       */
+/*   Updated: 2016/01/05 01:21:55 by mfleuria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int			ft_comptetri(char *p, int elem1, int elem2)
 	while (p[cpt2] != '#')
 		cpt2++;
 	equal = (ft_rectetriisequ(p, cpt1, cpt2) == 4);
-	ft_resetpiece(p);
+	ft_resetPiece(p);
 	return (equal);
 }

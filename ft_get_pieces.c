@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getpieces.c                                     :+:      :+:    :+:   */
+/*   ft_get_pieces.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/09 18:32:32 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/05 12:30:34 by mfleuria         ###   ########.fr       */
+/*   Created: 2015/12/09 14:05:40 by jleu              #+#    #+#             */
+/*   Updated: 2016/01/05 12:22:17 by mfleuria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-char		*ft_getpieces(size_t size_file, char *filename)
+char		*get_pieces(char *file_name, size_t size_file)
 {
 	char	*pieces;
 	int		fd;
 
-	if (!(pieces = (char*)malloc(sizeof(char) * size_file + 1)))
+	if (!(pieces = (char*)malloc(sizeof(char) * size_file)))
 		return (NULL);
-	if (!(fd = open(filename, O_RDONLY)))
+	if (!(fd = open(file_name, O_RDONLY)))
 		return (NULL);
-	read(fd, pieces, size_file);
 	pieces[size_file] = '\0';
-	close(fd);
 	return (pieces);
 }

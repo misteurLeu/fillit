@@ -6,7 +6,7 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/09 14:12:59 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/04 16:03:37 by jleu             ###   ########.fr       */
+/*   Updated: 2016/01/05 12:10:59 by mfleuria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ int	ft_setpiece(char *piece, char *sqr, size_t num, size_t ss)
 	{
 		if (ft_cansetpiece(piece, cptp, sqr, cpts, ss) == 4)
 		{
-			ft_resetPiece(piece);
+			ft_resetpiece(piece);
 			ft_set_p(piece, cptp, sqr, cpts, ss);
 			ft_setletter(sqr, num);
 			return(1);
 		}
-		ft_resetPiece(piece);
+		ft_resetpiece(piece);
 		cpts++;
 		while (sqr[cpts] && sqr[cpts] != '.')
 			cpts++;

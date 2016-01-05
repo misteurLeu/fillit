@@ -6,13 +6,13 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 14:50:39 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/04 16:02:50 by jleu             ###   ########.fr       */
+/*   Updated: 2016/01/05 12:05:46 by mfleuria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void ft_resetPiece(char *p)
+void	ft_resetpiece(char *p)
 {
 	while (*p)
 	{
