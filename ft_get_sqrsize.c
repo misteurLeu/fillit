@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_sqrsize.c                                      :+:      :+:    :+:   */
+/*   ft_get_sqrsize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/09 12:43:36 by jleu              #+#    #+#             */
-/*   Updated: 2015/12/09 13:48:48 by jleu             ###   ########.fr       */
+/*   Created: 2016/01/07 18:17:37 by jleu              #+#    #+#             */
+/*   Updated: 2016/01/07 18:18:02 by jleu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-size_t	get_sqrsize(size_t file_size)
+size_t	ft_get_sqrsize(size_t file_size)
 {
 	size_t nbrpiece;
 	size_t sqr;
