@@ -6,13 +6,13 @@
 /*   By: mfleuria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/06 05:02:58 by mfleuria          #+#    #+#             */
-/*   Updated: 2016/01/05 02:03:15 by mfleuria         ###   ########.fr       */
+/*   Updated: 2016/01/07 18:15:36 by jleu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int		rec_valid_bloc(char *t, int c)
+static int		ft_rec_valid_bloc(char *t, int c)
 {
 	int			size;
 
@@ -21,13 +21,13 @@ static int		rec_valid_bloc(char *t, int c)
 	{
 		t[c] = '.';
 		if (t[c + 1] == '#')
-			size += rec_valid_bloc(t, c + 1);
+			size += ft_rec_valid_bloc(t, c + 1);
 		if (c < 14 && t[c + 5] == '#')
-			size += rec_valid_bloc(t, c + 5);
+			size += ft_rec_valid_bloc(t, c + 5);
 		if (c % 5 != 0 && t[c - 1] == '#')
-			size += rec_valid_bloc(t, c - 1);
+			size += ft_rec_valid_bloc(t, c - 1);
 		if (c > 4 && t[c - 5] == '#')
-			size += rec_valid_bloc(t, c - 5);
+			size += ft_rec_valid_bloc(t, c - 5);
 		return (size);
 	}
 	return (0);
@@ -44,7 +44,7 @@ static int		ft_test_fichier(char *tab)
 	{
 		while ((cmp + 1) % 5 != 0)
 		{
-			if (rec_valid_bloc(tab, cmp) == 4)
+			if (ft_rec_valid_bloc(tab, cmp) == 4)
 				cmp_block = 4;
 			else if (cmp < 20 && tab[cmp] != '.')
 				return (0);

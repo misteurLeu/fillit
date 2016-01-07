@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/09 20:11:22 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/05 16:04:54 by mfleuria         ###   ########.fr       */
+/*   Created: 2016/01/07 18:12:03 by jleu              #+#    #+#             */
+/*   Updated: 2016/01/07 18:12:05 by jleu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int			endbt(char *values, size_t nb_p)
+static int			ft_endbt(char *values, size_t nb_p)
 {
 	int				isnull;
 
@@ -61,10 +61,10 @@ static int			ft_rec_backtrack(char *values, char *q[2], size_t s[2])
 			cpt++;
 		end++;
 	}
-	return (end >= NB_TEST_MAX ? -1 : endbt(values, s[0]));
+	return (end >= NB_TEST_MAX ? -1 : ft_endbt(values, s[0]));
 }
 
-static char			*type_pieces(char *p, size_t nb_p)
+static char			*ft_type_pieces(char *p, size_t nb_p)
 {
 	char			*types;
 	int				cpt;
@@ -107,7 +107,7 @@ int					ft_backtrack(char *q[2], size_t size[2])
 	char			*tab1;
 	int				success;
 
-	if (!(tab1 = type_pieces(q[1], size[0])))
+	if (!(tab1 = ft_type_pieces(q[1], size[0])))
 		return (0);
 	success = ft_rec_backtrack(tab1, q, size);
 	free(tab1);

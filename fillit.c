@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 17:04:57 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/05 15:35:43 by mfleuria         ###   ########.fr       */
+/*   Created: 2016/01/07 18:09:32 by jleu              #+#    #+#             */
+/*   Updated: 2016/01/07 18:18:36 by jleu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ int			main(int argc, char **argv)
 	if (((size[0] = ft_fichier_valid(argv[1])) == 0 || argc != 2)
 			&& write(1, "error\n", 7))
 		return (0);
-	size[1] = get_sqrsize(size[0]);
-	q[0] = gen_square(size[1]);
+	size[1] = ft_get_sqrsize(size[0]);
+	q[0] = ft_gen_square(size[1]);
 	q[1] = ft_getpieces(size[0], argv[1]);
 	size[0] = (size[0] + 1) / 21;
 	while (!ft_backtrack(q, size))
 	{
 		size[1]++;
 		free(q[0]);
-		q[0] = gen_square(size[1]);
+		q[0] = ft_gen_square(size[1]);
 	}
 	if (q[1][0] != '0')
 		ft_putstr(q[0]);

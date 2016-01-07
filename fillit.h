@@ -6,7 +6,7 @@
 /*   By: jleu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 15:26:11 by jleu              #+#    #+#             */
-/*   Updated: 2016/01/07 14:56:25 by jleu             ###   ########.fr       */
+/*   Updated: 2016/01/07 18:18:13 by jleu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define NB_TEST_MAX 1500000000
 
 int		ft_fichier_valid(char *file_name);
-char	*gen_square(size_t size);
-size_t	get_sqrsize(size_t file_size);
+char	*ft_gen_square(size_t size);
+size_t	ft_get_sqrsize(size_t file_size);
 int		ft_removepiece(char *tab, int nb);
 int		ft_setpiece(char *q[2], size_t num, size_t ss);
 char	*ft_getpieces(size_t size_file, char *filename);
